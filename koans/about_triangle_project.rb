@@ -17,8 +17,8 @@ class AboutTriangleProject < Neo::Koan
   end
 
   def test_scalene_triangles_have_no_equal_sides
-    assert_equal :scalene, triangle(3, 4, 5)
-    assert_equal :scalene, triangle(10, 11, 12)
-    assert_equal :scalene, triangle(5, 4, 2)
+    assert_equal nil, triangle(3, 4, 5)
+    assert_equal nil, triangle(10, 11, 12)
+    assert_equal nil, triangle(5, 4, 2)
   end
 end
