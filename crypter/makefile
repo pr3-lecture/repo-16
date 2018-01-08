@@ -1,10 +1,13 @@
 
 clean:
-	del crypto.o encrypt.exe decrypt.exe
+	del crypto.o main.o encrypt.exe decrypt.exe
 
 crypto.o: crypto.c
 	gcc -Wall -c crypto.c
 
-crypto: crypto.o
-	gcc -o encrypt crypto.o
-	gcc -o decrypt crypto.o
+main.o: main.c
+	gcc -Wall -c main.c
+	
+crypto: crypto.o main.o
+	gcc -o encrypt crypto.o main.o
+	gcc -o decrypt crypto.o main.o
