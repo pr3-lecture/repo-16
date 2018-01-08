@@ -43,6 +43,7 @@ int doCrypt(KEY key, const char* input, char* output){
 		char newOutput = newInput ^ newKey;
 		output[i] = newOutput + 'A' - 1;
 	}
+	output[strlen(input)] = '\0';
 
 	return 0;
 }
