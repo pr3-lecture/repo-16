@@ -4,46 +4,33 @@
 
 typedef enum { false, true } bool;
 
-int main(){
+//modus 1 für encrypt, 0 für decrypt
+int checkForIllegalChars(const char* input, int modus){
 
-	KEY key;
-	key.type = 1;
-	key.chars = "TPERULESTPERULESTPERULESTP";
+	char* allowedCharacters;
 
-	char* input = "URFVPJB[]ZN^XBJCEBVF@ZRKMJ";
-	char output[strlen(input)+1];
+	if (modus == 1) {
+		allowedCharacters = MESSAGE_CHARACTERS;
+	} else {
+		allowedCharacters = CYPHER_CHARACTERS;
+	}
 
-	printf("Before Crypt\n");
-	printf("%s\n", key.chars);
-	printf("%s\n", input);
-	printf("Going to Encrypt\n");
-	encrypt(key, input, output);
-	printf("%s\n", key.chars);
-	printf("%s\n", input);
-	printf("%s\n", output);
+	int checkIfCorrect;
 
-}
-int checkKeyException(KEY key){
-	
-	char* allowedCharactersForKey = KEY_CHARACTERS;
-	int checkKey;
+	for (int i = 0; i < strlen(input); i++) {
+		checkIfCorrect = 0;
 
-	for (int i = 0; i < strlen(key.chars); i++) {
-		checkKey = 0;
-
-		for (int j = 0; j < strlen(allowedCharactersForKey); j++) {
-			if(key.chars[i] == allowedCharactersForKey[j]){
-				checkKey = 1;
+		for (int j = 0; j < strlen(allowedCharacters); j++) {
+			if(input[i] == allowedCharacters[j]){
+				checkIfCorrect = 1;
 			}
 		}
 
-		if(checkKey = 0){
+		if(checkIfCorrect == 0){
 			return 0;
 		}
 	}
-
 	return 1;
-
 }
 
 int doCrypt(KEY key, const char* input, char* output){
@@ -66,10 +53,13 @@ int encrypt(KEY key, const char* input, char* output){
 		return E_KEY_TOO_SHORT;
 	}
 
-	if(checkKeyException(key) == 1){
+	if(checkForIllegalChars(key.chars, 1) == 0){
 		return E_KEY_ILLEGAL_CHAR;
 	}
 
+	if (checkForIllegalChars(input, 1) == 0) {
+		return E_MESSAGE_ILLEGAL_CHAR;
+	}
 
 	doCrypt(key, input, output);
 
@@ -82,10 +72,13 @@ int decrypt(KEY key, const char* cypherText, char* output){
 		return E_KEY_TOO_SHORT;
 	}
 
-	if(checkKeyException(key) == 1){
+	if(checkForIllegalChars(key.chars, 1) == 0){
 		return E_KEY_ILLEGAL_CHAR;
 	}
 
+	if (checkForIllegalChars(cypherText, 0) == 0) {
+		return E_CYPHER_ILLEGAL_CHAR;
+	}
 
 	doCrypt(key, cypherText, output);
 
