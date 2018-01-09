@@ -50,7 +50,7 @@ int doCrypt(KEY key, const char* input, char* output){
 
 int encrypt(KEY key, const char* input, char* output){
 
-	if(strlen(key.chars) < 1){
+	if(strlen(key.chars) < 2){
 		fprintf(stderr, "%s\n", "KEY TOO SHORT");
 		return E_KEY_TOO_SHORT;
 	}
@@ -72,15 +72,18 @@ int encrypt(KEY key, const char* input, char* output){
 
 int decrypt(KEY key, const char* cypherText, char* output){
 
-	if(strlen(key.chars) < 1){
+	if(strlen(key.chars) < 2){
+		fprintf(stderr, "%s\n", "KEY TOO SHORT");
 		return E_KEY_TOO_SHORT;
 	}
 
 	if(checkForIllegalChars(key.chars, 1) == 0){
+		fprintf(stderr, "%s\n", "ILLEGAL KEY");
 		return E_KEY_ILLEGAL_CHAR;
 	}
 
 	if (checkForIllegalChars(cypherText, 0) == 0) {
+		fprintf(stderr, "%s\n", "ILLEGAL CYPHER");
 		return E_CYPHER_ILLEGAL_CHAR;
 	}
 
