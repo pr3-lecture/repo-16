@@ -5,7 +5,7 @@
 #include "crypto.c"
 
 int main(int argc, char const *argv[]) {
-  printf("test\n");
+
 
   KEY key;
   key.chars = argv[1];
@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
       printf("Encrypted: %s\n", output);
     }
   }
-  
+
   if(strstr(argv[0], "decrypt") != NULL) {
     if(decrypt(key, input, output) == 0) {
       printf("Decrypted: %s\n", output);
